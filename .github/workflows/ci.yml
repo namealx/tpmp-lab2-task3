@@ -1,0 +1,28 @@
+name: C Build and Test
+
+on:
+  push:
+    branches: [ main, master, development ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        brew update
+        
+    - name: Build with Make
+      run: make
+      
+    - name: Run check target
+      run: make check
+      
+    - name: Run distcheck target
+      run: make distcheck
